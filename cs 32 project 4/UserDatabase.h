@@ -3,7 +3,6 @@
 
 #include <string>
 #include "treemm.h"
-#include <map>
 class User;
 
 class UserDatabase
@@ -14,7 +13,7 @@ public:
   User *get_user_from_email(const std::string &email) const;
 
 private:
-  std::map<std::string, User *> m_map;
+  TreeMultimap<std::string, User *> m_map;
 };
 
 #endif // USERDATABASE_INCLUDED

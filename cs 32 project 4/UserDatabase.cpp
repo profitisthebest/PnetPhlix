@@ -10,7 +10,6 @@ using namespace std;
 
 UserDatabase::UserDatabase()
 {
-    // Replace this line with correct code.
 }
 
 bool UserDatabase::load(const string &filename) // must specify the complete path
@@ -28,8 +27,6 @@ bool UserDatabase::load(const string &filename) // must specify the complete pat
         // get the email and f its already in the bst as a key
         if (!getline(infile, email))
             return false;
-        if (m_map.find(email) != m_map.end())
-            return false; // **** CHANGE THIS TO .SEARCH and NULLPTR later when finished treemm.h
 
         // get number of movies watched and convert into int
         string movieNumString;
@@ -49,7 +46,7 @@ bool UserDatabase::load(const string &filename) // must specify the complete pat
 
         // construct a new person and add to tree
         User *tempUser = new User(name, email, movies_watched);
-        m_map.insert({email, tempUser}); // CHANGE THIS LATER
+        m_map.insert(email, tempUser); // key = email, value = user
 
         // skip the new line
         getline(infile, temp);
@@ -60,13 +57,14 @@ bool UserDatabase::load(const string &filename) // must specify the complete pat
 
 User *UserDatabase::get_user_from_email(const string &email) const
 {
-    User *tempUser = nullptr;
-
-    map<string, User *>::const_iterator itr = m_map.find(email);
-    if (itr != m_map.end())
+    TreeMultimap<string, User *>::Iterator itr = m_map.find(email);
+    
+    // there should only be one user per email so we just dereference the iterator right away to get the user pointer
+    
+    if (itr.is_valid()) // if the iterator is valid
     {
-        User *tempUser = itr->second; // gives the User pointer
+        User* temp = itr.get_value();
+        return temp;
     }
-
-    return tempUser; // return nullptr if the email doesn't map to anything
+    else return nullptr;
 }
