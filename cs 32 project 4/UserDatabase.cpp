@@ -14,7 +14,6 @@ UserDatabase::UserDatabase()
 
 bool UserDatabase::load(const string &filename) // must specify the complete path
 {
-
     ifstream infile(filename);
     string temp;
     if (!infile)
