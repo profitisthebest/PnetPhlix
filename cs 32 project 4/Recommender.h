@@ -28,7 +28,17 @@ class Recommender
   private:
     UserDatabase* m_user_database;
     MovieDatabase* m_movie_database;
-    bool customCompare(); // use this to sort the pairs of
+    
+    struct MovieAndRankHelper
+    {
+        MovieAndRankHelper(std::string movieID, int movieScore, float movieRating, const std::string movieName) : movie_id(movieID), movie_score(movieScore), movie_name(movieName), movie_rating(movieRating) {}
+        
+        std::string movie_id;
+        std::string movie_name;
+        int movie_score;
+        float movie_rating;
+    };
+    static bool customCompare(const MovieAndRankHelper& MovieA, const MovieAndRankHelper& MovieB);
 };
 
 #endif // RECOMMENDER_INCLUDED

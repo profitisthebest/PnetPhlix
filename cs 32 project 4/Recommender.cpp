@@ -17,8 +17,44 @@ Recommender::Recommender(const UserDatabase& user_database,
     m_movie_database = const_cast<MovieDatabase*>(& movie_database);
 }
 
+// returns true if movie A should go before movie B
+bool Recommender::customCompare(const MovieAndRankHelper &MovieA, const MovieAndRankHelper &MovieB)
+{
+    // if Movie A has a higher score than Movie B then Movie A comes before Movie B
+    if (MovieA.movie_score > MovieB.movie_score)
+    {
+        return true;
+    }
+    else if (MovieA.movie_score < MovieB.movie_score)
+    { // if Movie A has a lower score than Movie B then Movie A SHOULD NOT come before Movie B
+        return false;
+    }
+    else // if we get here then the scores are equal:
+    {
+        if (MovieA.movie_rating > MovieB.movie_rating)
+        { // if Movie A has a higher rating than Movie B then Movie A comes before Movie B
+            return true;
+        }
+        else if (MovieA.movie_rating < MovieB.movie_rating)
+        { // if Movie A has a lower rating than Movie B then Movie A comes before Movie B
+            return false;
+        }
+        else // scores and ratings are equal
+        {
+            return MovieA.movie_name < MovieB.movie_name; // Movie A is alphabetically first
+        }
+    }
+}
+
 vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int movie_count) const
 {
+    // if movie_count is negative or 0 we just return an empty vector
+    if (movie_count <= 0)
+    {
+        vector<MovieAndRank> empty_recommendations;
+        return empty_recommendations;
+    }
+    
     // get the user using their email
     User* thisUser = m_user_database->get_user_from_email(user_email);
     
@@ -88,7 +124,7 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
     // filter out the movies that we have already watched
     for (unordered_map<Movie*, int>::iterator it = compatibility_map.begin(); it != compatibility_map.end(); it++) // loop through the unordered map
     {
-        if (find(movies_watched_ids.begin(), movies_watched_ids.end(), it->first) != movies_watched.end()) // if the pointer of the movie in the compatibility map IS in the pointers of movies watched
+        if (find(movies_watched.begin(), movies_watched.end(), it->first) != movies_watched.end()) // if the pointer of the movie in the compatibility map IS in the pointers of movies watched
         {
             // we want to remove the id-score pair from the unordered_map
             compatibility_map.erase(it);
@@ -98,9 +134,35 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
     // compatibility map now has only movies with compatibility score of 1+ and no movies that are already watched
     // compatibility map is mapping type Movie* ==> int
     
+    // convert compatibility map into a vector of type MovieAndRankHelper
+    vector<MovieAndRankHelper> helper_v;
+    
+    for (unordered_map<Movie*, int>::iterator i = compatibility_map.begin(); i != compatibility_map.end(); i++)
+    {
+        string movieID = (i->first)->get_id();
+        float movieRating = (i->first)->get_rating();
+        string movieName = (i->first)->get_title();
+        int compatibilityScore = i->second;
+        
+        MovieAndRankHelper temp(movieID, compatibilityScore, movieRating, movieName);
+        helper_v.push_back(temp);
+    }
+    
+    // helper_v is now a vector of the type MovieAndRankHelper, so sort helper_v
+    sort(helper_v.begin(), helper_v.end(), &customCompare);
+    
+    // now it is sorted so we create a new vector of recommendations and fill it with as many as wanted
+    vector<MovieAndRank> recommendations;
+    
+    for (int i = 0; i < movie_count; i++)
+    {
+        string movieID = helper_v[i].movie_id;
+        int compatibilityScore = helper_v[i].movie_score;
+        
+        MovieAndRank temp(movieID, compatibilityScore);
+        recommendations.push_back(temp);
+    }
         
         
-        
-        
-    return vector<MovieAndRank>();  // Replace this line with correct code.
+    return recommendations;
 }
