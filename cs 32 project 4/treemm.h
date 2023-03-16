@@ -14,7 +14,7 @@ public:
         Iterator() : isValid(false) {} // invalid iterator
         
         // constructor for a valid iterator
-        Iterator(typename std::vector<ValueType>::const_iterator it, typename std::vector<ValueType>::const_iterator e) : itr(it), isValid(true), end(e) {}
+        Iterator(typename std::vector<ValueType>::iterator it, typename std::vector<ValueType>::const_iterator e) : itr(it), isValid(true), end(e) {}
 
         ValueType &get_value() const
         {
@@ -41,7 +41,7 @@ public:
 
     private:
         bool isValid; // keeps track of whether or not the iterator is valid
-        typename std::vector<ValueType>::const_iterator itr; // itr for the vector of values
+        typename std::vector<ValueType>::iterator itr; // itr for the vector of values
         typename std::vector<ValueType>::const_iterator end; // keeps track of just past the last value in 'values'
     };
 
@@ -70,6 +70,7 @@ public:
             {
                 // we associate the value with the key by adding it to the vector
                 curr->values.push_back(value);
+                return;
             }
             if (key < curr->key) // the target key is less than the current key so we go to a left child (if exists)
             {

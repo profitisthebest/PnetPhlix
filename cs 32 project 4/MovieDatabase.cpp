@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
 MovieDatabase::MovieDatabase()
@@ -25,28 +26,34 @@ bool MovieDatabase::load(const string& filename)
         string release_year;
         if (!getline(infile, release_year)) return false; // get the release year of the movie
         
+       
+        string single;
+        
         
         vector<string> seperatecommasDirectors; // get all of the directors in the next line
-        while(infile.good())
+        if (!getline(infile, single)) return false; // get the entire line into a string called single
+        stringstream dd(single); // put the whole line into a stringstream
+        while (getline(dd, single, ',')) // seperate by commas
         {
-            string single;
-            getline(infile, single, ',');
+            // here we have the indiviudal directors names
             seperatecommasDirectors.push_back(single);
         }
-        
+
+    
         vector<string> seperatecommasActors; // get all of the actors in the next line
-        while(infile.good())
+        if (!getline(infile, single)) return false; // get the entire line into a string called single
+        stringstream aa(single); // put the whole line into a stringstream
+        while (getline(aa, single, ',')) // seperate by commas
         {
-            string single;
-            getline(infile, single, ',');
             seperatecommasActors.push_back(single);
         }
         
+        
         vector<string> seperatecommasGenres; // get all of the genres in the next line
-        while(infile.good())
+        if (!getline(infile, single)) return false; // get the entire line into single
+        stringstream gg(single); // put the whole line into a stringstream variable
+        while (getline(gg, single, ',')) // seperate by commas
         {
-            string single;
-            getline(infile, single, ',');
             seperatecommasGenres.push_back(single);
         }
         
@@ -54,7 +61,6 @@ bool MovieDatabase::load(const string& filename)
         if (!getline(infile, rating)) return false; // get the rating as a string
         float num_rating = stof(rating); // convert it to a float
         
-    
         
         // create a new instance of the Movie
         Movie* tempMovie = new Movie(id, name, release_year, seperatecommasDirectors, seperatecommasActors, seperatecommasGenres, num_rating);
@@ -79,6 +85,8 @@ bool MovieDatabase::load(const string& filename)
             m_map_genreToMovie.insert(seperatecommasGenres[i], tempMovie); // associate the movie with its genres
         }
         
+        // skip the new line
+        getline(infile, temp);
     }
     return true;
 }

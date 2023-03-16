@@ -1,7 +1,11 @@
 #include "UserDatabase.h"
 #include "User.h"
+#include "Movie.h"
+#include "MovieDatabase.h"
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <cassert>
 using namespace std;
 
 //////////////////////////i/////////////////////////////////////////////////////
@@ -22,30 +26,45 @@ using namespace std;
   // data files to makde debuggiing easier, so you can replace the string
   // literals with the names of those smaller files.
 
-const string USER_DATAFILE  = "users.txt";
-const string MOVIE_DATAFILE = "movies.txt";
+const string USER_DATAFILE  = "/Users/supjames/Desktop/cs 32 project 4/cs 32 project 4/users.txt";
+const string MOVIE_DATAFILE = "/Users/supjames/Desktop/cs 32 project 4/cs 32 project 4/movies.txt";
 
 int main()
 {
     
+    auto start = chrono::steady_clock::now();
 	UserDatabase udb;
-	if (0&&!udb.load(USER_DATAFILE))  // In skeleton, load always return false
+    bool udb_bool = udb.load(USER_DATAFILE);
+    auto stop = chrono::steady_clock::now();
+    
+	if (!udb_bool)  // if load returned false
 	{
 		cout << "Failed to load user data file " << USER_DATAFILE << "!" << endl;
 		return 1;
 	}
-	for (;;)
-	{
-		cout << "Enter user email address (or quit): ";
-		string email;
-		getline(cin, email);
-		if (email == "quit")
-			return 0;
-		User* u = udb.get_user_from_email(email);
-		if (u == nullptr)
-			cout << "No user in the database has that email address." << endl;
-		else
-			cout << "Found " << u->get_full_name() << endl;
-	}
+    else
+    {
+        cout << "User database loaded" << endl;
+        cout << "Took " << (chrono::duration_cast<chrono::milliseconds>(stop - start).count()) << "ms" << endl;
+    }
+    
+    cout << endl;
+    
+    auto moviestart = chrono::steady_clock::now();
+    MovieDatabase mdb;
+    bool mdb_bool = mdb.load(MOVIE_DATAFILE);
+    auto moviestop = chrono::steady_clock::now();
+    if (!mdb_bool)  // if load returned false
+    {
+        cout << "Failed to load movie data file " << MOVIE_DATAFILE << "!" << endl;
+        return 1;
+    }
+    else
+    {
+        cout << "Movie database loaded" << endl;
+        cout << "Took " << (chrono::duration_cast<chrono::milliseconds>(moviestop - moviestart).count()) << "ms" << endl;
+    }
+    
+    
 }
 

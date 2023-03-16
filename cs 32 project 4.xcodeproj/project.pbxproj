@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A1590E8129C11D7A00936CF0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1590E8029C11D7A00936CF0 /* main.cpp */; };
+		A14FC95229C11FF2000AE02E /* Movie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC95129C11FF2000AE02E /* Movie.cpp */; };
+		A14FC95529C11FFF000AE02E /* MovieDatabase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC95429C11FFF000AE02E /* MovieDatabase.cpp */; };
+		A14FC95929C1200D000AE02E /* Recommender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC95829C1200D000AE02E /* Recommender.cpp */; };
+		A14FC95D29C1201D000AE02E /* User.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC95C29C1201D000AE02E /* User.cpp */; };
+		A14FC96029C12029000AE02E /* UserDatabase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC95F29C12029000AE02E /* UserDatabase.cpp */; };
+		A14FC96429C12066000AE02E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A14FC96329C12066000AE02E /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +28,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A14FC95129C11FF2000AE02E /* Movie.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Movie.cpp; sourceTree = "<group>"; };
+		A14FC95329C11FFA000AE02E /* Movie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
+		A14FC95429C11FFF000AE02E /* MovieDatabase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovieDatabase.cpp; sourceTree = "<group>"; };
+		A14FC95629C12003000AE02E /* MovieDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieDatabase.h; sourceTree = "<group>"; };
+		A14FC95729C12009000AE02E /* movies.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = movies.txt; sourceTree = "<group>"; };
+		A14FC95829C1200D000AE02E /* Recommender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recommender.cpp; sourceTree = "<group>"; };
+		A14FC95A29C12011000AE02E /* Recommender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recommender.h; sourceTree = "<group>"; };
+		A14FC95B29C12015000AE02E /* treemm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = treemm.h; sourceTree = "<group>"; };
+		A14FC95C29C1201D000AE02E /* User.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = User.cpp; sourceTree = "<group>"; };
+		A14FC95E29C12026000AE02E /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		A14FC95F29C12029000AE02E /* UserDatabase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UserDatabase.cpp; sourceTree = "<group>"; };
+		A14FC96129C1202D000AE02E /* UserDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDatabase.h; sourceTree = "<group>"; };
+		A14FC96229C12033000AE02E /* users.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = users.txt; sourceTree = "<group>"; };
+		A14FC96329C12066000AE02E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A1590E7D29C11D7A00936CF0 /* cs 32 project 4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cs 32 project 4"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1590E8029C11D7A00936CF0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +75,20 @@
 		A1590E7F29C11D7A00936CF0 /* cs 32 project 4 */ = {
 			isa = PBXGroup;
 			children = (
-				A1590E8029C11D7A00936CF0 /* main.cpp */,
+				A14FC96329C12066000AE02E /* main.cpp */,
+				A14FC95129C11FF2000AE02E /* Movie.cpp */,
+				A14FC95329C11FFA000AE02E /* Movie.h */,
+				A14FC95429C11FFF000AE02E /* MovieDatabase.cpp */,
+				A14FC95629C12003000AE02E /* MovieDatabase.h */,
+				A14FC95729C12009000AE02E /* movies.txt */,
+				A14FC96229C12033000AE02E /* users.txt */,
+				A14FC95829C1200D000AE02E /* Recommender.cpp */,
+				A14FC95A29C12011000AE02E /* Recommender.h */,
+				A14FC95B29C12015000AE02E /* treemm.h */,
+				A14FC95C29C1201D000AE02E /* User.cpp */,
+				A14FC95E29C12026000AE02E /* User.h */,
+				A14FC95F29C12029000AE02E /* UserDatabase.cpp */,
+				A14FC96129C1202D000AE02E /* UserDatabase.h */,
 			);
 			path = "cs 32 project 4";
 			sourceTree = "<group>";
@@ -119,7 +150,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1590E8129C11D7A00936CF0 /* main.cpp in Sources */,
+				A14FC95229C11FF2000AE02E /* Movie.cpp in Sources */,
+				A14FC96029C12029000AE02E /* UserDatabase.cpp in Sources */,
+				A14FC95929C1200D000AE02E /* Recommender.cpp in Sources */,
+				A14FC95529C11FFF000AE02E /* MovieDatabase.cpp in Sources */,
+				A14FC96429C12066000AE02E /* main.cpp in Sources */,
+				A14FC95D29C1201D000AE02E /* User.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
