@@ -28,6 +28,7 @@ class Recommender
   private:
     UserDatabase* m_user_database;
     MovieDatabase* m_movie_database;
+    bool customCompare(); // use this to sort the pairs of
 };
 
 #endif // RECOMMENDER_INCLUDED

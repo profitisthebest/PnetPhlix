@@ -36,7 +36,7 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
     
     // unordered set to keep track of the compatibility score of movies
     // ID -> compatibility_score
-    unordered_map<string, int> compatibility_map;
+    unordered_map<Movie*, int> compatibility_map;
     
     // for each movie that the user has watched
     for (int i = 0; i < movies_watched.size(); i++)
@@ -51,7 +51,7 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             // add 20 points to their compatibility score and insert into the unordered map
             for (int k = 0; k < movies_with_director.size(); k++)
             {
-                compatibility_map[movies_with_director[k]->get_id()] += 20;
+                compatibility_map[movies_with_director[k]] += 20;
             }
         }
         
@@ -65,7 +65,7 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             // add 30 points to their compatibility score and insert into the unordered map if not already in
             for (int k = 0; k < movies_with_actor.size(); k++)
             {
-                compatibility_map[movies_with_actor[k]->get_id()] += 30;
+                compatibility_map[movies_with_actor[k]] += 30;
             }
         }
         
@@ -80,22 +80,24 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             // add 1 point to their compatibility score and insert into the unordered map if not already in
             for (int k = 0; k < movies_with_genre.size(); k++)
             {
-                compatibility_map[movies_with_genre[k]->get_id()] += 1;
+                compatibility_map[movies_with_genre[k]] += 1;
             }
         }
     }
     
     // filter out the movies that we have already watched
-    for (auto i : compatibility_map)
+    for (unordered_map<Movie*, int>::iterator it = compatibility_map.begin(); it != compatibility_map.end(); it++) // loop through the unordered map
     {
-        if (find(movies_watched_ids.begin(), movies_watched_ids.end(), i.first) != movies_watched_ids.end()) // if the ID of the movie in the compatibility map IS in the IDs of movies watched
+        if (find(movies_watched_ids.begin(), movies_watched_ids.end(), it->first) != movies_watched.end()) // if the pointer of the movie in the compatibility map IS in the pointers of movies watched
         {
             // we want to remove the id-score pair from the unordered_map
-            // compatibility_map.erase(i);
+            compatibility_map.erase(it);
         }
     }
-        
-        
+    
+    // compatibility map now has only movies with compatibility score of 1+ and no movies that are already watched
+    // compatibility map is mapping type Movie* ==> int
+    
         
         
         
