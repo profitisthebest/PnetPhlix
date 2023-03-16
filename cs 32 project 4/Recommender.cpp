@@ -82,7 +82,7 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
         for (int j = 0; j < movie_directors.size(); j++) // for every director of the movie
         {
             // find all movies with that director
-            vector<Movie*> movies_with_director = m_movie_database->get_movies_with_actor(movie_directors[j]);
+            vector<Movie*> movies_with_director = m_movie_database->get_movies_with_director(movie_directors[j]);
             
             // add 20 points to their compatibility score and insert into the unordered map
             for (int k = 0; k < movies_with_director.size(); k++)
