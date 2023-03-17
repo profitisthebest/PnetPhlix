@@ -122,13 +122,26 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
     }
     
     // filter out the movies that we have already watched
-    for (unordered_map<Movie*, int>::iterator it = compatibility_map.begin(); it != compatibility_map.end(); it++) // loop through the unordered map
+    /*for (unordered_map<Movie*, int>::iterator it = compatibility_map.begin(); it != compatibility_map.end(); it++) // loop through the unordered map
     {
         if (find(movies_watched.begin(), movies_watched.end(), it->first) != movies_watched.end()) // if the pointer of the movie in the compatibility map IS in the pointers of movies watched
         {
             // we want to remove the id-score pair from the unordered_map
             compatibility_map.erase(it);
         }
+    }*/
+    
+    // filter out the movies that we have already watched
+    for (auto it = compatibility_map.cbegin(); it != compatibility_map.cend() /* not hoisted */; /* no increment */)
+    {
+      if (find(movies_watched.begin(), movies_watched.end(), it->first) != movies_watched.end())
+      {
+          compatibility_map.erase(it++);    // or "it = m.erase(it)" since C++11
+      }
+      else
+      {
+        ++it;
+      }
     }
     
     // compatibility map now has only movies with compatibility score of 1+ and no movies that are already watched
